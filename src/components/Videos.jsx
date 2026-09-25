@@ -5,7 +5,6 @@ export default function Videos() {
   const [videos, setVideos] = useState([]);
   const [activeFilter, setActiveFilter] = useState("All");
 
-  // Filter Buttons
   const filters = [
     "All",
     "Brand Collaboration",
@@ -36,7 +35,7 @@ export default function Videos() {
     };
   }, []);
 
-  // Fetch Videos
+  // Fetch videos
   async function getVideos() {
     const { data, error } = await supabase
       .from("videos")
@@ -51,7 +50,7 @@ export default function Videos() {
     setVideos(data || []);
   }
 
-  // Filter using CATEGORY column from Supabase
+  // Filter videos using category from Supabase
   const filteredVideos = useMemo(() => {
     if (activeFilter === "All") return videos;
 
@@ -78,16 +77,16 @@ export default function Videos() {
           tech and brand collaborations.
         </p>
 
-        {/* CATEGORY BUTTONS */}
-        <div className="flex gap-3 overflow-x-auto pb-4 mb-12 scrollbar-hide">
+        {/* RESPONSIVE CATEGORY BUTTONS */}
+        <div className="flex flex-wrap justify-center sm:justify-start gap-3 mb-12">
           {filters.map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`whitespace-nowrap rounded-full px-6 py-3 text-xs sm:text-sm uppercase tracking-[2px] font-semibold transition-all duration-300 border ${
+              className={`px-4 sm:px-6 py-3 rounded-full border transition-all duration-300 font-semibold uppercase tracking-[2px] text-[11px] sm:text-xs lg:text-sm ${
                 activeFilter === filter
-                  ? "bg-pink-400 text-black border-pink-400 shadow-lg shadow-pink-500/20"
-                  : "border-pink-400 text-pink-300 hover:bg-pink-400 hover:text-black"
+                  ? "bg-pink-400 text-black border-pink-400 shadow-lg shadow-pink-500/30"
+                  : "bg-transparent border-pink-400 text-pink-300 hover:bg-pink-400 hover:text-black"
               }`}
             >
               {filter}
@@ -115,7 +114,7 @@ export default function Videos() {
             ))}
           </div>
         ) : (
-          /* VIDEOS GRID */
+          /* VIDEO GRID */
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
             {filteredVideos.map((item) => (
               <div key={item.id} className="group">
